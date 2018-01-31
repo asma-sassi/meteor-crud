@@ -1,0 +1,81 @@
+template(name="compaigns")
+	.row
+		.col-md-6
+			h2 {{title}}
+			+newCompaign
+			button.insert_compaign(type="button" class="btn btn-primary") Ajouter une compagne 
+	.row
+		.col-md-12
+			table(class="table table-bordered table-hover")
+				thead
+					tr
+						th(scope="col") Name
+						th(scope="col") Details
+				tbody
+					+each compaigns
+						+item
+
+template(name="item")
+	tr
+		td= name
+		td
+			a(href="/compaigns/#{_id}") Cliquer içi
+
+
+template(name="insertCompaignForm")
+	+quickForm collection="Compaigns" id="insertCompaignForm" type="insert"
+
+template(name="newCompaign")
+	#add_compaign.modal.fade
+		.modal-dialog(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span(aria-hidden="true"): i.fa.fa-close
+					h4.modal-title Ajouter une compagne
+				.modal-body
+					+quickForm collection="Compaigns" id="insertCompaignForm" type="insert" doc=addCompaignDoc class="add-compaign-form" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"
+
+template(name="editCompaign")
+	#edit_compaign.modal.fade
+		.modal-dialog(role="document")
+			.modal-content
+				.modal-header
+					button.close(type="button" data-dismiss="modal")
+						span(aria-hidden="true"): i.fa.fa-close
+					h4.modal-title Modifier la compagne
+				.modal-body
+					+quickForm collection="Compaigns" id="updateCompaignForm" type="update" doc=editCompaignDoc class="edit-compaign-form" template="bootstrap3-horizontal" label-class="col-sm-2" input-col-class="col-sm-10"
+
+
+template(name="compaign")
+	.row
+		.col-md-6
+			//- h3= postData._id
+			fieldset
+				legend
+					h3= postData.name
+				table
+					tr
+						td
+							label Nom
+						td
+							p= postData.name
+					tr
+						td
+							label Categorie
+						td
+							p= postData.category
+					tr
+						td
+							label Type
+						td
+							p= postData.type
+					tr
+						td
+							label Prix
+						td
+							p= postData.price
+	.row
+		.col-md-6
+			a(href="/compaigns/#") Retour à l'acceuil 
