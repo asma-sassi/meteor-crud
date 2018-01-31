@@ -1,6 +1,12 @@
 Template.compaigns.onCreated( function(){
-	Meteor.subscribe('compaigns');
-	console.log(Meteor.subscribe('compaigns'));
+	// Meteor.subscribe('compaigns');
+	// console.log(Meteor.subscribe('compaigns'));
+	this.pagination = new Meteor.Pagination(Compaigns, {
+		sort: {
+			createdAt: -1
+		},
+		perPage: 3
+	});
 });
 
 Template.compaign.onCreated( function(){
@@ -19,8 +25,24 @@ Template.compaign.helpers({
 });
 
 Template.compaigns.helpers({
-	compaigns: function(){
+	/*compaigns: function(){
 		return Compaigns.find({}, { sort: { createdAt: -1 } });
+	},*/
+	isReady: function () {
+		return Template.instance().pagination.ready();
+	},
+	templatePagination: function () {
+		return Template.instance().pagination;
+	},
+	compaigns: function () {
+		return Template.instance().pagination.getPage();
+	},
+	// optional helper used to return a callback that should be executed before changing the page
+	clickEvent: function() {
+		return function(e, templateInstance, clickedPage) {
+			e.preventDefault();
+			console.log('Changing page from ', templateInstance.data.pagination.currentPage(), ' to ', clickedPage);
+		};
 	}
 });
 

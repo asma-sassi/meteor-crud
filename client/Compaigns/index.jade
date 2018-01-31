@@ -14,8 +14,10 @@ template(name="compaigns")
 						th(scope="col") Details
 						th(scope="col") Actions
 				tbody
-					+each compaigns
-						+item
+					if isReady
+						+each compaigns 
+							+item 
+						+defaultBootstrapPaginator pagination=templatePagination limit=3 containerClass="text-center" onClick=clickEvent
 
 template(name="item")
 	tr
