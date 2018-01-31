@@ -20,7 +20,7 @@ Template.compaign.helpers({
 
 Template.compaigns.helpers({
 	compaigns: function(){
-		return Compaigns.find();
+		return Compaigns.find({}, { sort: { createdAt: -1 } });
 	}
 });
 
@@ -34,19 +34,14 @@ Template.compaigns.events({
 
 Template.editCompaign.helpers({
 	editCompaignDoc: function() {
-		var doc = Template.instance().data.data;
-		//console.log(Template.instance().data);
-		//console.log(Session.get('compaign-doc-to-edit'));
-		//return Session.get('compaign-doc-to-edit');
-		return doc;
-		console.log(doc);
+		return Session.get('compaign-doc-to-edit');
 	}
 });
 
-Template.compaign.events({
-	'click .edit_compaign': function(e, template) {
+Template.item.events({
+	'click .edit_compaign': function(e) {
 		e.preventDefault();
-		//Session.set('compaign-doc-to-edit', postData);
+		Session.set('compaign-doc-to-edit',this);
 		$('#edit_compaign').modal('show');
 	}
 });

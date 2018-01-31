@@ -3,6 +3,7 @@ template(name="compaigns")
 		.col-md-6
 			h2 {{title}}
 			+newCompaign
+			+editCompaign 
 			button.insert_compaign(type="button" class="btn btn-primary") Ajouter une compagne 
 	.row
 		.col-md-12
@@ -11,6 +12,7 @@ template(name="compaigns")
 					tr
 						th(scope="col") Name
 						th(scope="col") Details
+						th(scope="col") Actions
 				tbody
 					+each compaigns
 						+item
@@ -20,6 +22,9 @@ template(name="item")
 		td= name
 		td
 			a(href="/compaigns/#{_id}") Cliquer içi
+		td
+			ul
+				li.edit_compaign(class="btn btn-info") Modifier la compagne 
 
 
 template(name="insertCompaignForm")
@@ -79,5 +84,3 @@ template(name="compaign")
 	.row
 		.col-md-6
 			a(href="/compaigns/#") Retour à l'acceuil
-			+editCompaign data=postData
-			a.edit_compaign(href="#") Modifier la compagne 
