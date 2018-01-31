@@ -78,4 +78,6 @@ template(name="compaign")
 							p= postData.price
 	.row
 		.col-md-6
-			a(href="/compaigns/#") Retour à l'acceuil 
+			a(href="/compaigns/#") Retour à l'acceuil
+			+editCompaign data=postData
+			a.edit_compaign(href="#") Modifier la compagne 
