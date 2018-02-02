@@ -43,6 +43,14 @@ Template.compaigns.helpers({
 			e.preventDefault();
 			console.log('Changing page from ', templateInstance.data.pagination.currentPage(), ' to ', clickedPage);
 		};
+	},
+	currentUser: function() {
+		if(Meteor.user()){
+			var username = Meteor.user().username;
+			var roles = Meteor.user().roles;
+			console.log("username: "+username," roles: "+roles);
+			return Meteor.user();
+		}
 	}
 });
 
@@ -68,6 +76,12 @@ Template.item.events({
 	}
 });
 
+Template.item.events({
+	'click .delete_compaign': function(){
+		return Compaigns.remove(this._id);
+	}
+});
+
 AutoForm.addHooks(['updateCompaignForm'], {
 	onSuccess: function(operation, result) {
 		$('#edit_compaign').modal('hide');
@@ -78,4 +92,8 @@ AutoForm.addHooks(['insertCompaignForm'], {
 	onSuccess: function(operation, result) {
 		$('#add_compaign').modal('hide');
 	}
+});
+
+Accounts.ui.config({
+	passwordSignupFields: 'USERNAME_ONLY',
 });

@@ -1,23 +1,31 @@
 template(name="compaigns")
 	.row
-		.col-md-6
-			h2 {{title}}
-			+newCompaign
-			+editCompaign 
-			button.insert_compaign(type="button" class="btn btn-primary") Ajouter une compagne 
-	.row
 		.col-md-12
-			table(class="table table-bordered table-hover")
-				thead
-					tr
-						th(scope="col") Name
-						th(scope="col") Details
-						th(scope="col") Actions
-				tbody
-					if isReady
-						+each compaigns 
-							+item 
-						+defaultBootstrapPaginator pagination=templatePagination limit=3 containerClass="text-center" onClick=clickEvent
+			+loginButtons
+	if currentUser
+		.row
+			h3 Welcome to winshotApp {{currentUser.username}}
+			each currentUser.roles
+				h4 Welcome to winshotApp
+				=this
+			.col-md-6
+				h2 {{title}}
+				+newCompaign
+				+editCompaign 
+				button.insert_compaign(type="button" class="btn btn-primary") Ajouter une compagne 
+		.row
+			.col-md-12
+				table(class="table table-bordered table-hover")
+					thead
+						tr
+							th(scope="col") Name
+							th(scope="col") Details
+							th(scope="col") Actions
+					tbody
+						if isReady
+							+each compaigns 
+								+item 
+							+defaultBootstrapPaginator pagination=templatePagination limit=3 containerClass="text-center" onClick=clickEvent
 
 template(name="item")
 	tr
@@ -27,7 +35,7 @@ template(name="item")
 		td
 			ul
 				li.edit_compaign(class="btn btn-info") Modifier la compagne 
-
+				li.delete_compaign(class="btn btn-danger") Supprimer
 
 template(name="insertCompaignForm")
 	+quickForm collection="Compaigns" id="insertCompaignForm" type="insert"

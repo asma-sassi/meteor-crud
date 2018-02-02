@@ -24,7 +24,7 @@ kadira:blaze-layout
 mquandalle:jade
 sacha:spin
 accounts-password
-useraccounts:unstyled
+#useraccounts:unstyled
 raix:handlebar-helpers
 meteortoys:allthings
 underscore
@@ -43,3 +43,4 @@ d3js:d3
 jcbernack:reactive-aggregate
 chart:chart
 kurounin:pagination-blaze
+accounts-ui
