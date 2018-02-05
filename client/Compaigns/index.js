@@ -9,6 +9,20 @@ Template.compaigns.onCreated( function(){
 	});
 });
 
+Template.welcome.onCreated( function(){
+	Tracker.autorun(function(){
+			if(Meteor.user().roles=['admin']){
+				FlowRouter.redirect('/admin');
+			} else if (Meteor.user().roles=['winshooter']){
+				FlowRouter.redirect('/winshooter');
+			} else if(Meteor.user().roles=['webmaster']){
+				FlowRouter.redirect('/webmaster');
+			} else {
+				FlowRouter.redirect('/login');
+			}
+		});
+});
+
 Template.compaign.onCreated( function(){
 	var template = this;
 	var id = FlowRouter.getParam('_id');

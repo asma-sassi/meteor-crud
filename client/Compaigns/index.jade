@@ -1,13 +1,37 @@
-template(name="compaigns")
+template(name="welcome")
+	.row
+		.col-md-12
+			h3 Welcome
+
+template(name="login")
 	.row
 		.col-md-12
 			+loginButtons
 	if currentUser
+		//- .row
+		//- 	.col-md-12
+		//- 		h4 Welcome to winshotApp {{currentUser.username}}
+		//- 	each currentUser.roles
+		//- 		h4 Welcome to winshotApp
+		//- 		=this
+template(name="admin")
+	.row
+		.col-md-12
+			h3 You're in {{currentUser.username}} page!
+
+template(name="webmaster")
+	.row
+		.col-md-12
+			h3 You're in {{currentUser.username}} page!
+
+template(name="winshooter")
+	.row
+		.col-md-12
+			h3 You're in {{currentUser.username}} page!
+
+
+template(name="compaigns")
 		.row
-			h3 Welcome to winshotApp {{currentUser.username}}
-			each currentUser.roles
-				h4 Welcome to winshotApp
-				=this
 			.col-md-6
 				h2 {{title}}
 				+newCompaign
