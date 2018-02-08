@@ -1,4 +1,18 @@
-FlowRouter.route('/welcome', {
+FlowRouter.route('/login', {
+	name:'login',
+	action(){
+		BlazeLayout.render('layout', {main:'login'})
+	}
+});
+
+FlowRouter.route('/register', {
+	name:'register',
+	action(){
+		BlazeLayout.render('layout', {main:'register'})
+	}
+});
+
+FlowRouter.route('/', {
 	name:'welcome',
 	action(){
 		BlazeLayout.render('layout', {title:'Winshot Custom Registration', main:'welcome'})
@@ -17,7 +31,7 @@ var adminRoutes = FlowRouter.group({
 	name: 'admin',
 	triggersEnter: [function(context, redirect) {
 		if (!Roles.userIsInRole(Meteor.user(), ['admin'])) {
-			redirect('/welcome');
+			redirect('/');
 		}
 		console.log('running group triggers for admin');
 	}]
@@ -33,33 +47,12 @@ adminRoutes.route('/', {
 	}]
 });
 
-var webmasterRoutes = FlowRouter.group({
-	prefix: '/webmaster',
-	name: 'webmaster',
-	triggersEnter: [function(context, redirect) {
-		if (!Roles.userIsInRole(Meteor.user(), ['webmaster'])) {
-			redirect('/welcome');
-		}
-		console.log('running group triggers for webmaster');
-	}]
-});
-
-// handling /webmaster route
-webmasterRoutes.route('/', {
-	action: function() {
-		BlazeLayout.render('layout', {title:'welcome to webmaster', main:'webmaster'})
-	},
-	triggersEnter: [function(context, redirect) {
-		console.log('running /webmaster trigger');
-	}]
-});
-
 var winshooterRoutes = FlowRouter.group({
 	prefix: '/winshooter',
 	name: 'winshooter',
 	triggersEnter: [function(context, redirect) {
 		if (!Roles.userIsInRole(Meteor.user(), ['winshooter'])) {
-			redirect('/welcome');
+			redirect('/');
 		}
 		console.log('running group triggers for winshooter');
 	}]

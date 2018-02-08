@@ -53,13 +53,6 @@ template(name='admin')
 			p
 				a.logout(href="#") Logout
 
-template(name='webmaster')
-	.row
-		.col-md-12
-			p Welcome to the webmaster page
-			p
-				a.logout(href="#") Logout
-
 template(name='winshooter')
 	.row
 		.col-md-12
@@ -70,8 +63,10 @@ template(name='winshooter')
 template(name='welcome')
 	.row
 		.col-md-12
-			h3 {{title}}
-			+login
+			if currentUser
+				p Welcome: {{currentUser.username}}
+			else 
+
 
 template(name="compaigns")
 	//- .row

@@ -1,0 +1,45 @@
+template(name="header")
+	.bs-example
+		nav.navbar.navbar-default
+			if currentUser
+				.navbar-header
+					button.navbar-toggle(type='button', data-target='#navbarCollapse', data-toggle='collapse')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='#') Brand
+				#navbarCollapse.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li.active
+							a(href).welcome Home
+						li
+							a(href='#') Profile
+					ul.nav.navbar-nav.navbar-right
+						li
+							a(style="Font-Weight: Bold;color:red;") {{currentUser.username}}
+						li
+							a |
+						li
+							a.logout(href='#') Logout
+			else
+				.navbar-header
+					button.navbar-toggle(type='button', data-target='#navbarCollapse', data-toggle='collapse')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='#') Brand
+				#navbarCollapse.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li.active
+							a(href).welcome Home
+					ul.nav.navbar-nav.navbar-right
+						li
+							a(href).register Register
+						li
+							a |
+						li
+							a(href).login Login
+
+

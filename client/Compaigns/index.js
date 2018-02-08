@@ -55,7 +55,6 @@ Template.register.events({
 		event.preventDefault();
 		var usernameVar = event.target.registerUsername.value;
 		var passwordVar = event.target.registerPassword.value;
-		console.log("Form submitted.");
 		Accounts.createUser({
 			username: usernameVar,
 			password: passwordVar
@@ -63,14 +62,23 @@ Template.register.events({
 			if (error) {
 				console.log("Error: " + error.reason);
 			} else {
-				document.location.reload(true);
-				Meteor.loginWithPassword(usernameVar, passwordVar);
-				FlowRouter.go("/winshooter");
+				// Meteor.loginWithPassword(usernameVar, passwordVar);
+				// FlowRouter.go('/winshooter');
+				// console.log('going to /winshooter');
+				Meteor.loginWithPassword(usernameVar, passwordVar, function(error){
+					if(error){
+						console.log(error.reason);
+					} else {
+						FlowRouter.go('/winshooter');
+						console.log('going to /winshooter');
+						console.log(Meteor.user().roles);
+					}
+				});
 			}
 		});
 	},
 	'click .click-login': function(event){
-		BlazeLayout.render('layout', {main:'login'})
+		FlowRouter.go('/login');
 	}
 });
 
@@ -87,19 +95,33 @@ Template.login.events({
 				if(Meteor.user()){
 					if(Roles.userIsInRole(Meteor.user(), ['admin'])){
 						FlowRouter.go('/admin');
-					} else if(Roles.userIsInRole(Meteor.user(), ['webmaster'])){
-						FlowRouter.go('/webmaster');
 					} else {
 						FlowRouter.go('/winshooter');
 						console.log('going to /winshooter');
 					}
-					console.log(Meteor.user());
+					console.log(Meteor.user().roles);
 				}
 			}
 		});
 	},
 	'click .click-register': function(event){
-		BlazeLayout.render('layout', {main:'register'})
+		FlowRouter.go('/register');
+	}
+});
+Template.header.events({
+	'click .register': function(event){
+		FlowRouter.go("/register");
+	},
+	'click .login': function(event){
+		FlowRouter.go("/login");
+	},
+	'click .logout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		FlowRouter.go('/');
+	},
+	'click .welcome': function(event){
+		FlowRouter.go('/');
 	}
 });
 
@@ -107,7 +129,7 @@ Template.dashboard.events({
 	'click .logout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		FlowRouter.go('/welcome');
+		FlowRouter.go('/');
 	}
 });
 
@@ -115,15 +137,7 @@ Template.admin.events({
 	'click .logout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		FlowRouter.go('/welcome');
-	}
-});
-
-Template.webmaster.events({
-	'click .logout': function(event){
-		event.preventDefault();
-		Meteor.logout();
-		FlowRouter.go('/welcome');
+		FlowRouter.go('/');
 	}
 });
 
@@ -131,7 +145,7 @@ Template.winshooter.events({
 	'click .logout': function(event){
 		event.preventDefault();
 		Meteor.logout();
-		FlowRouter.go('/welcome');
+		FlowRouter.go('/');
 	}
 });
 
