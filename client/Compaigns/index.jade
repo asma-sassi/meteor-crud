@@ -1,31 +1,110 @@
-template(name="compaigns")
+template(name='register')
+	.row
+		.col-xs-6.col-xs-offset-3
+			.panel.panel-default
+				.panel-heading Register
+				.panel-body 
+					form.form-horizontal
+						.form-group
+							label.col-sm-2.control-label(for='Username') Username
+							.col-sm-10
+								input.form-control(type='username', name='registerUsername', placeholder='Username')
+						.form-group
+							label.col-sm-2.control-label(for='Password') Password
+							.col-sm-10
+								input.form-control(type='password', name='registerPassword', placeholder='Password')
+						.form-group
+							.col-sm-offset-2.col-sm-10
+								button.btn.btn-primary.btn-sm(type='submit', value='Register') Register
+								a(href).click-login Login
+
+template(name='login')
+	.row
+		.col-xs-6.col-xs-offset-3
+			.panel.panel-default
+				.panel-heading Login
+				.panel-body 
+					form.form-horizontal
+						.form-group
+							label.col-sm-2.control-label(for='Username') Username
+							.col-sm-10
+								input.form-control(type='username', name='loginUsername', placeholder='Username')
+						.form-group
+							label.col-sm-2.control-label(for='Password') Password
+							.col-sm-10
+								input.form-control(type='password', name='loginPassword', placeholder='Password')
+						.form-group
+							.col-sm-offset-2.col-sm-10
+								button.btn.btn-primary.btn-sm(type='submit', value='Login') Login
+								a(href).click-register Register
+
+template(name='dashboard')
 	.row
 		.col-md-12
-			+loginButtons
-	if currentUser
-		.row
-			h3 Welcome to winshotApp {{currentUser.username}}
-			each currentUser.roles
-				h4 Welcome to winshotApp
-				=this
-			.col-md-6
-				h2 {{title}}
-				+newCompaign
-				+editCompaign 
-				button.insert_compaign(type="button" class="btn btn-primary") Ajouter une compagne 
-		.row
-			.col-md-12
-				table(class="table table-bordered table-hover")
-					thead
-						tr
-							th(scope="col") Name
-							th(scope="col") Details
-							th(scope="col") Actions
-					tbody
-						if isReady
-							+each compaigns 
-								+item 
-							+defaultBootstrapPaginator pagination=templatePagination limit=3 containerClass="text-center" onClick=clickEvent
+			p You're logged in.
+			p
+				a.logout(href='#') Logout
+
+template(name='admin')
+	.row
+		.col-md-12
+			p Welcome to the admin page
+			+compaigns
+			p
+				a.logout(href="#") Logout
+
+template(name='webmaster')
+	.row
+		.col-md-12
+			p Welcome to the webmaster page
+			p
+				a.logout(href="#") Logout
+
+template(name='winshooter')
+	.row
+		.col-md-12
+			p Welcome to the winshooter page
+			p
+				a.logout(href="#") Logout
+
+template(name='welcome')
+	.row
+		.col-md-12
+			h3 {{title}}
+			if currentUser
+				+dashboard
+			else
+				//- +register
+				+login
+
+template(name="compaigns")
+	//- .row
+	//- 	.col-md-12
+	//- 		+loginButtons
+	//- if currentUser
+	.row
+		h3 Welcome to winshotApp {{currentUser.username}}
+		each currentUser.roles
+			h4 Welcome to winshotApp
+			=this
+		.col-md-6
+			h2 {{title}}
+			+newCompaign
+			+editCompaign 
+			button.insert_compaign(type="button" class="btn btn-primary") Ajouter une compagne 
+	.row
+		.col-md-12
+			table(class="table table-bordered table-hover")
+				thead
+					tr
+						th(scope="col") Name
+						th(scope="col") Details
+						th(scope="col") Actions
+				tbody
+					if isReady
+						+each compaigns 
+							+item 
+						+defaultBootstrapPaginator pagination=templatePagination limit=3 containerClass="text-center" onClick=clickEvent
 
 template(name="item")
 	tr

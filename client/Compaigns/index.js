@@ -1,12 +1,8 @@
 Template.compaigns.onCreated( function(){
 	// Meteor.subscribe('compaigns');
-	// console.log(Meteor.subscribe('compaigns'));
 	this.pagination = new Meteor.Pagination(Compaigns, {
-		sort: {
-			createdAt: -1
-		},
-		perPage: 3
-	});
+			sort: {createdAt: -1}, perPage: 3}
+		);
 });
 
 Template.compaign.onCreated( function(){
@@ -54,6 +50,92 @@ Template.compaigns.helpers({
 	}
 });
 
+Template.register.events({
+	'submit form': function(event) {
+		event.preventDefault();
+		var usernameVar = event.target.registerUsername.value;
+		var passwordVar = event.target.registerPassword.value;
+		console.log("Form submitted.");
+		Accounts.createUser({
+			username: usernameVar,
+			password: passwordVar
+		}, function(error) {
+			if (error) {
+				console.log("Error: " + error.reason);
+			} else {
+				document.location.reload(true);
+				Meteor.loginWithPassword(usernameVar, passwordVar);
+				// FlowRouter.go("/dashboard");
+			}
+		});
+	},
+	'click .click-login': function(event){
+		BlazeLayout.render('layout', {main:'login'})
+	}
+});
+
+Template.login.events({
+	'submit form': function(event) {
+		event.preventDefault();
+		var usernameVar = event.target.loginUsername.value;
+		var passwordVar = event.target.loginPassword.value;
+		// Meteor.loginWithPassword(usernameVar, passwordVar);
+		Meteor.loginWithPassword(usernameVar, passwordVar, function(error){
+			if(error){
+				console.log(error.reason);
+			} else {
+				if(Meteor.user()){
+					if(Roles.userIsInRole(Meteor.user(), ['admin'])){
+						FlowRouter.go('/admin');
+					} else if(Roles.userIsInRole(Meteor.user(), ['webmaster'])){
+						FlowRouter.go('/webmaster');
+					} else {
+						FlowRouter.go('/winshooter');
+					}
+					console.log(Meteor.user());
+				}
+			}
+		});
+	},
+	'click .click-register': function(event){
+		BlazeLayout.render('layout', {main:'register'})
+	}
+});
+
+Template.dashboard.events({
+	'click .logout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		FlowRouter.go('/welcome');
+	}
+});
+
+Template.admin.events({
+	'click .logout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		FlowRouter.go('/welcome');
+	}
+});
+
+Template.webmaster.events({
+	'click .logout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		FlowRouter.go('/welcome');
+	}
+});
+
+Template.winshooter.events({
+	'click .logout': function(event){
+		event.preventDefault();
+		Meteor.logout();
+		FlowRouter.go('/welcome');
+	}
+});
+
+
+
 Template.compaigns.events({
 	'click .insert_compaign': function(e) {
 		e.preventDefault();
@@ -97,3 +179,5 @@ AutoForm.addHooks(['insertCompaignForm'], {
 Accounts.ui.config({
 	passwordSignupFields: 'USERNAME_ONLY',
 });
+
+
