@@ -1,3 +1,17 @@
+FlowRouter.route('/welcome', {
+	name:'welcome',
+	action(){
+		BlazeLayout.render('layout', {title:'Winshot Custom Registration', main:'welcome'})
+	}
+});
+
+FlowRouter.route('/dashboard', {
+	name:'dashboard',
+	action(){
+		BlazeLayout.render('layout', {title:'welcome to dashboard', main:'dashboard'})
+	}
+});
+
 var adminRoutes = FlowRouter.group({
 	prefix: '/admin',
 	name: 'admin',
@@ -19,44 +33,46 @@ adminRoutes.route('/', {
 	}]
 });
 
-// FlowRouter.route( '/admin', {
-// 	name: 'admin',
-// 	triggersEnter: [], 
-// 	action: function() {
-// 		BlazeLayout.render('layout', {title:'welcome to admin', main:'admin'})
-// 		console.log("You're in admin page");
-// 	},
-// 	triggersExit: [ function() { 
-// 		console.log( "Something to do on EXIT." ); 
-// 	}],
-// });
-
-FlowRouter.route('/welcome', {
-	name:'welcome',
-	action(){
-		BlazeLayout.render('layout', {title:'Winshot Custom Registration', main:'welcome'})
-	}
+var webmasterRoutes = FlowRouter.group({
+	prefix: '/webmaster',
+	name: 'webmaster',
+	triggersEnter: [function(context, redirect) {
+		if (!Roles.userIsInRole(Meteor.user(), ['webmaster'])) {
+			redirect('/welcome');
+		}
+		console.log('running group triggers for webmaster');
+	}]
 });
 
-FlowRouter.route('/dashboard', {
-	name:'dashboard',
-	action(){
-		BlazeLayout.render('layout', {title:'welcome to dashboard', main:'dashboard'})
-	}
-});
-
-FlowRouter.route('/webmaster', {
-	name:'webmaster',
-	action(){
+// handling /webmaster route
+webmasterRoutes.route('/', {
+	action: function() {
 		BlazeLayout.render('layout', {title:'welcome to webmaster', main:'webmaster'})
-	}
+	},
+	triggersEnter: [function(context, redirect) {
+		console.log('running /webmaster trigger');
+	}]
 });
 
-FlowRouter.route('/winshooter', {
-	name:'winshooter',
-	action(){
+var winshooterRoutes = FlowRouter.group({
+	prefix: '/winshooter',
+	name: 'winshooter',
+	triggersEnter: [function(context, redirect) {
+		if (!Roles.userIsInRole(Meteor.user(), ['winshooter'])) {
+			redirect('/welcome');
+		}
+		console.log('running group triggers for winshooter');
+	}]
+});
+
+// handling /winshooter route
+winshooterRoutes.route('/', {
+	action: function() {
 		BlazeLayout.render('layout', {title:'welcome to winshooter', main:'winshooter'})
-	}
+	},
+	triggersEnter: [function(context, redirect) {
+		console.log('running /winshooter trigger');
+	}]
 });
 
 FlowRouter.route('/compaigns', {

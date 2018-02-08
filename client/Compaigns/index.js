@@ -65,7 +65,7 @@ Template.register.events({
 			} else {
 				document.location.reload(true);
 				Meteor.loginWithPassword(usernameVar, passwordVar);
-				// FlowRouter.go("/dashboard");
+				FlowRouter.go("/winshooter");
 			}
 		});
 	},
@@ -91,6 +91,7 @@ Template.login.events({
 						FlowRouter.go('/webmaster');
 					} else {
 						FlowRouter.go('/winshooter');
+						console.log('going to /winshooter');
 					}
 					console.log(Meteor.user());
 				}

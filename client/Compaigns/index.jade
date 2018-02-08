@@ -71,11 +71,7 @@ template(name='welcome')
 	.row
 		.col-md-12
 			h3 {{title}}
-			if currentUser
-				+dashboard
-			else
-				//- +register
-				+login
+			+login
 
 template(name="compaigns")
 	//- .row
