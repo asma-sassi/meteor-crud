@@ -12,6 +12,13 @@ FlowRouter.route('/register', {
 	}
 });
 
+FlowRouter.notFound = {
+	action() {
+		FlowRouter.redirect('/');
+		BlazeLayout.render('layout', {main: 'welcome'});
+	}
+};
+
 FlowRouter.route('/', {
 	name:'welcome',
 	action(){
@@ -36,7 +43,6 @@ var adminRoutes = FlowRouter.group({
 			}
 			console.log('running group triggers for admin');
 		});
-		
 	}]
 });
 
