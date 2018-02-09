@@ -30,10 +30,13 @@ var adminRoutes = FlowRouter.group({
 	prefix: '/admin',
 	name: 'admin',
 	triggersEnter: [function(context, redirect) {
-		if (!Roles.userIsInRole(Meteor.user(), ['admin'])) {
-			redirect('/');
-		}
-		console.log('running group triggers for admin');
+		Tracker.autorun(()=>{
+			if (Roles.subscription.ready() && !Roles.userIsInRole(Meteor.user(), ['admin'])) {
+				FlowRouter.redirect('/');
+			}
+			console.log('running group triggers for admin');
+		});
+		
 	}]
 });
 
@@ -51,10 +54,13 @@ var winshooterRoutes = FlowRouter.group({
 	prefix: '/winshooter',
 	name: 'winshooter',
 	triggersEnter: [function(context, redirect) {
-		if (!Roles.userIsInRole(Meteor.user(), ['winshooter'])) {
-			redirect('/');
-		}
-		console.log('running group triggers for winshooter');
+		Tracker.autorun((comp)=>{
+			if (Roles.subscription.ready() && !Roles.userIsInRole(Meteor.user(), ['winshooter'])) {
+				FlowRouter.redirect('/');
+				comp.stop();
+			}
+			console.log('running group triggers for winshooter');
+		});
 	}]
 });
 

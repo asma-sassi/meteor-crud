@@ -48,7 +48,7 @@ template(name='dashboard')
 template(name='admin')
 	.row
 		.col-md-12
-			p Welcome to the admin page
+			h3 Welcome to the admin page
 			+compaigns
 			p
 				a.logout(href="#") Logout
@@ -69,15 +69,11 @@ template(name='welcome')
 
 
 template(name="compaigns")
-	//- .row
-	//- 	.col-md-12
-	//- 		+loginButtons
-	//- if currentUser
 	.row
-		h3 Welcome to winshotApp {{currentUser.username}}
-		each currentUser.roles
-			h4 Welcome to winshotApp
-			=this
+		.col-md-6
+			each currentUser.roles
+				p My role is: 
+					=this
 		.col-md-6
 			h2 {{title}}
 			+newCompaign
