@@ -48,17 +48,19 @@ template(name='dashboard')
 template(name='admin')
 	.row
 		.col-md-12
-			h3 Welcome to the admin page
-			+compaigns
-			p
-				a.logout(href="#") Logout
+			if isInRole 'admin'
+				h3 Welcome to the admin page
+				+compaigns
+				p
+					a.logout(href="#") Logout
 
 template(name='winshooter')
 	.row
 		.col-md-12
-			p Welcome to the winshooter page
-			p
-				a.logout(href="#") Logout
+			if isInRole 'winshooter'
+				p Welcome to the winshooter page
+				p
+					a.logout(href="#") Logout
 
 template(name='welcome')
 	.row

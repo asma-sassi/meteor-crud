@@ -9,7 +9,7 @@ Template.compaign.onCreated( function(){
 	var template = this;
 	var id = FlowRouter.getParam('_id');
 	Tracker.autorun(function() {
-		template.subscribe('compaigns', id);
+		Meteor.subscribe('compaigns', id);
 	});
 });
 
